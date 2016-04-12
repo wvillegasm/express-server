@@ -1,0 +1,1 @@
+var StudentNotebook = angular.module('StudentNotebook', []);

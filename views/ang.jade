@@ -1,0 +1,30 @@
+extends layout
+block content
+    h1 Student List
+
+    div.wrapper
+        div(ng-repeat="student in students | orderBy: ['name','course'] ",class="contact-item")
+            div
+                | {{student.name}} - {{student.phone}}
+            span.course
+                | {{student.course}}
+
+    div.addBtn(ng-hide='formVisibility')
+        button(ng-click='showForm()') Add Student
+
+    div.wrapper(ng-show='formVisibility')
+        h2 Add Contacts
+        form
+            | Name:
+            input(type='text' ng-model='newStudent.name')
+            | Phone:
+            input(type='text' ng-model='newStudent.phone')
+            | Course:
+            input(type='text' ng-model='newStudent.course')
+            button(ng-click='Save()') Save
+
+
+block scripts
+    script(src='/javascripts/angular.min.js')
+    script(src='/javascripts/production/ang-app.min.js')
+

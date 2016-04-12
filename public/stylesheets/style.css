@@ -1,0 +1,53 @@
+body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-weight: 100;
+}
+h1{
+    text-align: center;
+    background: #CCC;
+}
+.nombre{
+    font-size: 18px;
+    color: #666;
+    text-shadow: 0px 2px 0px #FFF;
+}
+.curso{
+    font-style: italic;
+    font-size: 13px;
+}
+.wrapper{
+    width: 650px;
+    margin: 5px auto;
+    box-shadow: 5px 5px 5px 1px #555;
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 10px;
+}
+.contact-item{
+    border-bottom: thin solid #CCCCCC;
+    padding: 10px;
+}
+.course{
+    font-style: italic;
+}
+a {
+  color: #00B7FF;
+}
+.addBtn{
+    width: 650px;
+    margin: 5px auto;
+    text-align: center;
+}
+
+button{
+    background: #080;
+    color: #FFFFFF;
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: thin solid #060;
+    margin: 5px auto;
+}
+button:hover{
+    background-color: #0A0;
+}
