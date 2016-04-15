@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+
+
 /* GET home page. */
 router.get('/', function(req, res) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -9,12 +11,20 @@ router.get('/', function(req, res) {
 });
 
 router.get('/:pin', function(req, res) {
-  res.header("Access-Control-Allow-Origin", "*");
-  console.log('Pin received: ', req.params.pin);
-  if(req.params.pin === '0'){
-      res.jsonp({pin:'', name:'', manager:'', contact: ''});
+  console.log('GET', req.params.pin);
+  // TODO validate if pin exists
+  var pin = req.params.pin || 0;
+  console.log('Current PIN: ', pin);
+  if(pin !== 0){
+    Siso.findOne({'pin': pin}, function(err, rec){
+      if(err){
+        res.json({'success':false, 'error':err});
+      }else{
+        res.json({'success': true, 'records':[rec]});
+      }
+    });
   }else{
-      res.jsonp({pin:'558899', name:'User 1', manager:'Manager', contact: 'DDDD'});
+    res.json({'success':false, 'error':'No PIN was received.'});
   }
 });
 

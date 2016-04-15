@@ -27,13 +27,14 @@ var recordSchema = mongoose.Schema({
 });
 
 var UserSchema = mongoose.Schema({
-  pin : String,
-  name : String,
-  manager : String,
-  contact : String
+  pin : {type: String, unique: true, required: true, dropDups: true },
+  name : {type: String, String,required: true},
+  manager : {type: String, String,required: true},
+  contact :{type: String,  Stringrequired: true}
 });
 
 var Siso = mongoose.model('SISO', recordSchema);
+var UserSchema = mongoose.model('User', UserSchema);
 
 /* GET home page. */
 router.post('/', function(req, res) {
@@ -115,6 +116,61 @@ router.get('/:pin', function(req, res){
     });
   }else{
     res.json({'success':false, 'error':'No PIN was received.'});
+  }
+});
+
+router.get('/list/:pin', function(req, res){
+  var pin = req.params.pin || 0;
+  console.log('Current PIN: ', pin);
+  if(pin !== 0){
+    Siso.find({'pin': pin}).
+    sort({insertedDate: -1}).
+    limit(5).
+    exec(function(err, records){
+      if(err){
+        res.json({'success':false, 'error':err});
+      }else{
+        res.json({'success': true, 'records':records});
+      }
+    });
+  }else{
+    res.json({'success':false, 'error':'No PIN was received.'});
+  }
+});
+
+router.get('/user/:pin', function(req, res){
+  var pin = req.params.pin || 0;
+  console.log('Current PIN: ', pin);
+  if(pin !== 0){
+    UserSchema.findOne({'pin': pin}).
+    exec(function(err, record){
+      if(err){
+        res.json({'success':false, 'error':err});
+      }else{
+        res.json({'success': true, 'record':record});
+      }
+    });
+  }else{
+    res.json({'success':false, 'error':'No PIN was received.'});
+  }
+});
+
+router.post('/user', function(req, res){
+  console.log('Values: ', req.body);
+  var _id = req.body._id || 0;
+  if(_id === 0){
+    console.log('\n\n\nNew Record');
+    var user = new UserSchema(req.body);
+    user.save(function(err){
+      if(err){
+          res.json({'success':false, 'error':err});
+      }else{
+        console.log(user);
+        res.json({'success': true, 'records':[{'_id':user._id, '__v':user.__v}]});
+      }
+    });
+  }else{
+    console.log('\n\n\nUpdate');
   }
 });
 
