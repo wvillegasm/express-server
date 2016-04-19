@@ -28,9 +28,10 @@ var recordSchema = mongoose.Schema({
 
 var UserSchema = mongoose.Schema({
   pin : {type: String, unique: true, required: true, dropDups: true },
-  name : {type: String, String,required: true},
-  manager : {type: String, String,required: true},
-  contact :{type: String,  Stringrequired: true}
+  username: {type: String, unique: true, required: true},
+  name : {type: String, required: true},
+  manager : {type: String, required: true},
+  contact :{type: String, required: true}
 });
 
 var Siso = mongoose.model('SISO', recordSchema);
@@ -155,6 +156,31 @@ router.get('/user/:pin', function(req, res){
   }
 });
 
+router.get('/user/username/:username/passw/:passw', function(req, res){
+  var username = req.params.username || 0;
+  var passw = req.params.passw || 0;
+
+  console.log('Current Username: ', username);
+  console.log('Current Passw: ', passw);
+
+  if(username !== 0){
+    UserSchema.findOne({'username': username, 'password': passw}, '_id pin name manager contact').
+    exec(function(err, record){
+      if(err){
+        res.json({'success':false, 'error':err});
+      }else{
+        if(record !== null){
+          res.json({'success': true, 'record':record});
+        }else{
+          res.json({'success': false});
+        }
+      }
+    });
+  }else{
+    res.json({'success':false, 'error':'No username was received.'});
+  }
+});
+
 router.post('/user', function(req, res){
   console.log('Values: ', req.body);
   var _id = req.body._id || 0;
@@ -166,7 +192,7 @@ router.post('/user', function(req, res){
           res.json({'success':false, 'error':err});
       }else{
         console.log(user);
-        res.json({'success': true, 'records':[{'_id':user._id, '__v':user.__v}]});
+        res.json({'success': true, 'record':{'_id':user._id, '__v':user.__v}});
       }
     });
   }else{

@@ -5,6 +5,10 @@
   "scripts": {
     "start": "node ./bin/www"
   },
+  "engines":{
+    "node": "~4.4.0",
+    "npm": "~2.40.20"
+  },
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-contrib-jshint": "~0.11.2",
@@ -21,6 +25,6 @@
     "jsonp-express": "0.0.1",
     "mongoose": "^4.4.11",
     "morgan": "~1.6.1",
-    "static-favicon": "~2.0.0-alpha"
+    "serve-favicon": "~2.0.0-alpha"
   }
 }
